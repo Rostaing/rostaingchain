@@ -1,0 +1,10 @@
+*.py
+.vscode
+MANIFEST.in
+requirements.txt
+dist
+rostaing_ocr.egg-info/
+__pycache__
+embedding_cache
+db_storage
+.env
