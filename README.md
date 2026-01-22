@@ -424,7 +424,7 @@ for token in reponse:
     print(token, end="", flush=True)
 ```
 
-### 12. 🧠 Universal Intelligence: Switching LLM Providers
+### 12. Universal Intelligence: Switching LLM Providers
 
 **A. Use DeepSeek (the cheaper GPT-4 alternative)**
 ```python
@@ -544,13 +544,13 @@ This will trigger IntelliSense and display all configuration arguments (like `me
 ```mermaid
 graph TD
     A[Data Source] -->|Watcher/Polling| B(Universal Loader)
-    B -->|Deep Profiling & OCR| C{Content Type?}
+    B -->|Deep Profiling & OCR| C{"Content Type?"}
     C -->|Text/Code| D[Text Splitter]
     C -->|Table/SQL| E[Statistical Summary]
     C -->|Audio/Video| F[Whisper Model]
     
     D & E & F --> G[Embeddings Manager]
-    G --> H[(Vector Database)]
+    G --> H[("Vector Database")]
     
     User -->|Query| I[Core Engine]
     I -->|"Retrieval (MMR)"| H
