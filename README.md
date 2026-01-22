@@ -8,9 +8,9 @@
 # 🧠 RostaingChain
 
 **The Ultimate Hybrid RAG Framework.**  
-*Local & Remote LLMs | Real-time Watcher | Deep Data Profiling | DLP Security | Multi-Modal*
+Local & Remote LLMs | Real-time Watcher | Deep Data Profiling | DLP Security | Multi-Modal
 
-RostaingChain is a production-ready framework designed to build autonomous RAG (Retrieval-Augmented Generation) systems. It bridges the gap between local privacy (Ollama, Local Docs) and cloud power (OpenAI, Groq, Datastores), featuring a unique **Live Watcher** that updates your AI's knowledge in real-time.
+**RostaingChain** is a production-ready framework designed to build autonomous RAG (Retrieval-Augmented Generation) systems. It bridges the gap between local privacy (Ollama, Local Docs) and cloud power (OpenAI, Groq, Datastores), featuring a unique **Live Watcher** that updates your AI's knowledge in real-time.
 
 ---
 
@@ -553,7 +553,7 @@ graph TD
     G --> H[(Vector Database)]
     
     User -->|Query| I[Core Engine]
-    I -->|Retrieval (MMR)| H
+    I -->|"Retrieval (MMR)"| H
     I -->|Context + History| J[LLM Engine]
     J -->|Raw Response| K[Security Layer]
     K -->|Clean Response| User
