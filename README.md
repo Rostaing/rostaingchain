@@ -19,7 +19,7 @@ Local & Remote LLMs | Real-time Watcher | Deep Data Profiling | DLP Security | M
 *   **Hybrid Intelligence:** Switch instantly between Local LLMs (Ollama, Llama.cpp) and Remote giants (OpenAI, Groq, Claude, Gemini, DeepSeek, Grok).
 *   **Live Watcher (Auto-Sync):** Drop a file in a folder, modify a SQL row, or update a website -> The AI learns it instantly.
 *   **Deep Profiling (Anti-Hallucination):** Automatically calculates statistics (Max, Min, Mean) for CSV/SQL data so the LLM never hallucinates numbers.
-*   **DLP Security:** Built-in Redaction system to mask sensitive data:(
+*   **DLP Security:** Built-in Redaction system to **mask sensitive data:** (
 - EMAIL: Email masked,
 - PHONE: Phone number masked,
 - ID_NUM: Personal ID masked,
