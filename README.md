@@ -190,10 +190,6 @@ agent = RostaingBrain(
 print(agent.chat("What is the average age of passengers?"))
 ```
 
-Here is the updated section to add to your **`README.md`**. It includes the specific example you requested, along with the detailed English explanations for `stream`, `output_format`, and `vector_db`.
-
----
-
 ### 4. Audio Analysis with Streaming & Markdown Output
 
 RostaingChain natively handles audio files (like `.m4a`, `.mp3`) using OpenAI Whisper locally. This example demonstrates how to process an audio file, enforce security filters, and stream the result in a specific JSON format.
