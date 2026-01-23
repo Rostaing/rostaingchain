@@ -20,22 +20,24 @@ Local & Remote LLMs | Real-time Watcher | Deep Data Profiling | DLP Security | M
 *   **Live Watcher (Auto-Sync):** Drop a file in a folder, modify a SQL row, or update a website -> The AI learns it instantly.
 *   **Deep Profiling (Anti-Hallucination):** Automatically calculates statistics (Max, Min, Mean) for CSV/SQL data so the LLM never hallucinates numbers.
 *   **DLP Security:** Built-in Redaction system to mask sensitive data:
-(EMAIL: Email masked,
-PHONE: Phone number masked,
-ID_NUM: Personal ID masked,
-PASSPORT: Passport number masked,
-SSN: Social Security Number masked,      
-POSTAL: City/Postal Code masked,
-BIC: BIC code confidential,
-IBAN: IBAN bank details protected,
-VAT_ID: VAT number masked,
-CREDIT_CARD: Credit card number masked,
-MONEY: Financial amount masked,
-CRYPTO: Crypto wallet masked,
-IP_ADDR: IP address masked,
-MAC_ADDR: MAC address masked,
-API_KEY: API Key redacted,
-DATE: Date masked) before display.
+(
+- EMAIL: Email masked,
+- PHONE: Phone number masked,
+- ID_NUM: Personal ID masked,
+- PASSPORT: Passport number masked,
+- SSN: Social Security Number masked,
+- POSTAL: City/Postal Code masked,
+- BIC: BIC code confidential,
+- IBAN: IBAN bank details protected,
+- VAT_ID: VAT number masked,
+- CREDIT_CARD: Credit card number masked,
+- MONEY: Financial amount masked,
+- CRYPTO: Crypto wallet masked,
+- IP_ADDR: IP address masked,
+- MAC_ADDR: MAC address masked,
+- API_KEY: API Key redacted,
+- DATE: Date masked 
+) before display.
 *   **Multi-Modal Native:** Understands Text, PDFs (OCR included), Images, Audio (Whisper), and YouTube videos.
 *   **Universal Sources:** Connects to Local Files, PostgreSQL, MySQL, Oracle, SQLite, MongoDB, Neo4j, and the Web.
 
