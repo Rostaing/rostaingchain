@@ -41,7 +41,7 @@ DATE: Date masked) before display.
 
 ---
 
-## 📦 Standard installation (Quick):
+### 📦 Standard installation (Quick):
 
 ```bash
 pip install rostaingchain
@@ -49,25 +49,25 @@ pip install rostaingchain
 pip install rostaing-ocr
 ```
 
-## 📦 “Power User” installation (All-inclusive):
+### 📦 “Power User” installation (All-inclusive):
 
 ```bash
 pip install rostaingchain[all]
 ```
 
-## 📦 Specific installation (e.g., only for SQL and using remote LLMs):
+### 📦 Specific installation (e.g., only for SQL and using remote LLMs):
 
 ```bash
 pip install rostaingchain[database,llms]
 ```
 
-## 📦 For office documents and advanced OCR:
+### 📦 For office documents and advanced OCR:
 
 ```bash
 pip install rostaingchain[docs,llms]
 ```
 
-## 📦 For multimedia (YouTube, audio, video, web):
+### 📦 For multimedia (YouTube, audio, video, web):
 
 ```bash
 pip install rostaingchain[media,llms]
