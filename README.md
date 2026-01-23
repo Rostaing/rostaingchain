@@ -75,7 +75,7 @@ pip install rostaingchain[media,llms]
 
 ## 🔑 Managing API Keys (Remote LLMs)
 
-To use remote LLMs (like GPT-4, Groq, Claude) without hardcoding your credentials in the code, RostaingChain supports environment variables.
+To use remote LLMs (like OpenAI, Groq, Claude, Gemini, Grok, Mistral, DeepSeek) without hardcoding your credentials in the code, RostaingChain supports environment variables.
 
 1.  **Create a file named `.env`** in your project root.
 2.  **Add your API keys** following this format:
