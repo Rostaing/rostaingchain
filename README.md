@@ -35,7 +35,7 @@ Local & Remote LLMs | Real-time Watcher | Deep Data Profiling | DLP Security | M
 - IP_ADDR: IP address masked,
 - MAC_ADDR: MAC address masked,
 - API_KEY: API Key redacted,
-- DATE: Date masked ) before display.
+- DATE: Date masked ) before display. Set to True for ALL filters, False to disable, or a list to select specific fields.
 *   **Multi-Modal Native:** Understands Text, PDFs (OCR included), Images, Audio (Whisper), and YouTube videos.
 *   **Universal Sources:** Connects to Local Files, PostgreSQL, MySQL, Oracle, SQLite, MongoDB, Neo4j, and the Web.
 
@@ -55,7 +55,7 @@ pip install rostaing-ocr
 pip install rostaingchain[all]
 ```
 
-### 📦 Specific installation (e.g., only for SQL and using remote LLMs):
+### 📦 Specific installation (e.g., only for SQL/NoSQL and using remote LLMs):
 
 ```bash
 pip install rostaingchain[database,llms]
@@ -163,14 +163,15 @@ agent = RostaingBrain(
     llm_model="llama3.2",
     data_source="bank_statements.pdf",
     # Enable Security
-    security_filters=["IBAN", "BIC", "PHONE", "EMAIL", "MONEY", "CREDIT_CARD"] # Options: True or False
+    security_filters=["IBAN", "BIC", "PHONE", "EMAIL", "MONEY", "CREDIT_CARD"] # Optional: DLP Security. Set to True for ALL filters, False to disable, or a list to select specific fields.
 )
 
 response = agent.chat("Give me the IBAN of the supplier.")
+print(response)
 # Output: "The IBAN is [Protected IBAN bank details]."
 ```
 
-### 3. Working with DataFrames (Pandas)
+### 3. Working with DataFrames (Pandas/Polars)
 
 ```python
 import pandas as pd
@@ -184,7 +185,8 @@ df = pd.read_csv("titanic.csv") # supports: Polars
 # Direct Memory Ingestion
 agent = RostaingBrain(
     llm_model="gpt-4o",
-    data_source=df 
+    data_source=df,
+    vector_db="chroma" 
 )
 
 print(agent.chat("What is the average age of passengers?"))
@@ -213,14 +215,14 @@ agent = RostaingBrain(
     vector_db="faiss",  # Options: 'faiss' or 'chroma'
     reset_db=True,      # Re-index the file on startup
     memory=True,        # Enable conversation history
-    security_filters=["PHONE", "BIC", "IBAN", "DATE"] # Active Data Loss Prevention
+    security_filters=["PHONE", "BIC", "IBAN", "DATE"] # Optional: DLP Security. Set to True for ALL filters, False to disable, or a list to select specific fields.
 )
 
 # Request a summary in JSON format with streaming enabled
 response = agent.chat("Give me a summary.", stream=True, output_format="markdown") # output_format supports: "json", "text (default)", "markdown", "toon"
 
 # Real-time display loop
-for token in reponse:
+for token in response:
     # Prints every token as soon as it arrives (ChatGPT-like effect)
     print(token, end="", flush=True)
 ```
@@ -283,7 +285,7 @@ agent = RostaingBrain(
 response = gent.chat("Give me a summary.", stream=True, output_format="markdown") # output_format supports: "json", "text (default)", "markdown", "toon"
 
 # Real-time display loop
-for token in reponse:
+for token in response:
     # Prints every token as soon as it arrives (ChatGPT-like effect)
     print(token, end="", flush=True)
 ```
@@ -307,7 +309,7 @@ agent = RostaingBrain(
 response = gent.chat("Give me a summary.", stream=True, output_format="markdown")
 
 # Real-time display loop
-for token in reponse:
+for token in response:
     # Prints every token as soon as it arrives (ChatGPT-like effect)
     print(token, end="", flush=True)
 ```
@@ -334,7 +336,8 @@ agent = RostaingBrain(
     llm_provider="openai",
     data_source=db_config,
     poll_interval=30, # Check for DB changes every 30 seconds
-    reset_db=True     # Start with a fresh index
+    reset_db=True,     # Start with a fresh index
+    vector_db="faiss"
 )
 
 print(agent.chat("What is the total revenue for Q1?"))
@@ -424,7 +427,7 @@ agent = RostaingBrain(
     llm_model="gpt-4o",
     data_source=mysql_config, # Pass the dictionary here.
     poll_interval=60,         # Watch for changes every minute
-    reset_db=True,
+    reset_db=True
 )
 ```
 
@@ -455,7 +458,7 @@ agent = RostaingBrain(
 response = gent.chat("Give me a summary.", stream=True)
 
 # Real-time display loop
-for token in reponse:
+for token in response:
     # Prints every token as soon as it arrives (ChatGPT-like effect)
     print(token, end="", flush=True)
 ```
@@ -551,7 +554,7 @@ agent = RostaingBrain(
 
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `llm_model` | str | `"llama3"` | Name of the model (e.g., "gpt-4o", "llama3"). |
+| `llm_model` | str | `"llama3"` | Name of the model (e.g., "gpt-4o", "llama3.2"). |
 | `llm_provider` | str | `"auto"` | "openai", "groq", "ollama", "anthropic"... |
 | `data_source` | str/dict/df | `"./data"` | File path, folder, URL, SQL config, or DataFrame. |
 | `vector_db` | str | `"chroma"` | "chroma", "faiss". |
