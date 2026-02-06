@@ -612,23 +612,7 @@ This will trigger IntelliSense and display all configuration arguments (like `me
 
 ## 🏗️ Architecture
 
-```mermaid
-graph TD
-    A[Data Source] -->|Watcher/Polling| B(Universal Loader)
-    B -->|Deep Profiling & OCR| C{"Content Type?"}
-    C -->|Text/Code| D[Text Splitter]
-    C -->|Table/SQL| E[Statistical Summary]
-    C -->|Audio/Video| F[Whisper Model]
-    
-    D & E & F --> G[Embeddings Manager]
-    G --> H[("Vector Database")]
-    
-    User -->|Query| I[Core Engine]
-    I -->|"Retrieval (MMR)"| H
-    I -->|Context + History| J[LLM Engine]
-    J -->|Raw Response| K[Security Layer]
-    K -->|Clean Response| User
-```
+![Framework Architecture](https://mermaid.ink/img/pako:eNqNUdtOwzAM_ZXI5w0I8QH7AsSEx9QHhMSEpS6mS9u0SVPGoar_Trp1Y9I08ZIn59ixfS6clpYp8MvaO9C8V7pE_6Q0LpExL6pGidbY_ByG0Y670zY7X8X0fB-XU9fH9fA8Xm8Pj_D-uB9S-v77eAzn6Y3n9_AOnm_3p9-6O5-7p3P67TzAnL-u42o_oWq0lO0YwDmgG9B6E1Z6iB7VAnp16An0_gA6K73X0A-U_I0eY2Xq0HqshGisFpWqWp40K-QyUj0H7YyW9_YqKq39Xy_G9DIs_A0S0GvNoM0S0GvNoE0SaS0XvUqM6C9SgY4L4U5Jm_Yj0hK2S9rXfL-BAnuYp05L6lI8-Gj5A1Ff9h0)
 
 ## Useful Links
 - [Author's LinkedIn](https://www.linkedin.com/in/davila-rostaing/)
