@@ -612,7 +612,7 @@ This will trigger IntelliSense and display all configuration arguments (like `me
 
 ## 🏗️ Architecture
 
-![Framework Architecture](https://mermaid.ai/app/projects/9152b9fe-f935-4946-a20f-ea95c153c14a/diagrams/c0a39e84-b8f6-4bb2-a9df-9bce7f4b9033/share/invite/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElEIjoiYzBhMzllODQtYjhmNi00YmIyLWE5ZGYtOWJjZTdmNGI5MDMzIiwiYWNjZXNzIjoiVmlldyIsImlhdCI6MTc3MDQxNTI1M30.oi7LHc-FjQNjP0UC_5cTdg5Oevsr8JfYWY0gLki55kA)
+![alt text](image.png)
 
 ## Useful Links
 - [Author's LinkedIn](https://www.linkedin.com/in/davila-rostaing/)
