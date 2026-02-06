@@ -612,7 +612,7 @@ This will trigger IntelliSense and display all configuration arguments (like `me
 
 ## 🏗️ Architecture
 
-![Framework Architecture](https://mermaid.ink/img/pako:eNqNUdtOwzAM_ZXI5w0I8QH7AsSEx9QHhMSEpS6mS9u0SVPGoar_Trp1Y9I08ZIn59ixfS6clpYp8MvaO9C8V7pE_6Q0LpExL6pGidbY_ByG0Y670zY7X8X0fB-XU9fH9fA8Xm8Pj_D-uB9S-v77eAzn6Y3n9_AOnm_3p9-6O5-7p3P67TzAnL-u42o_oWq0lO0YwDmgG9B6E1Z6iB7VAnp16An0_gA6K73X0A-U_I0eY2Xq0HqshGisFpWqWp40K-QyUj0H7YyW9_YqKq39Xy_G9DIs_A0S0GvNoM0S0GvNoE0SaS0XvUqM6C9SgY4L4U5Jm_Yj0hK2S9rXfL-BAnuYp05L6lI8-Gj5A1Ff9h0)
+![Framework Architecture](https://mermaid.ai/app/projects/9152b9fe-f935-4946-a20f-ea95c153c14a/diagrams/c0a39e84-b8f6-4bb2-a9df-9bce7f4b9033/share/invite/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElEIjoiYzBhMzllODQtYjhmNi00YmIyLWE5ZGYtOWJjZTdmNGI5MDMzIiwiYWNjZXNzIjoiVmlldyIsImlhdCI6MTc3MDQxNTI1M30.oi7LHc-FjQNjP0UC_5cTdg5Oevsr8JfYWY0gLki55kA)
 
 ## Useful Links
 - [Author's LinkedIn](https://www.linkedin.com/in/davila-rostaing/)
