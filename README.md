@@ -214,7 +214,7 @@ agent = RostaingBrain(
     memory=True,        # Enable conversation history
     security_filters=["PHONE", "BIC", "IBAN", "DATE"], # Optional: DLP Security. Set to True for ALL filters, False to disable, or a list to select specific fields.
     stream=True,
-    output_format="markdown
+    output_format="markdown" # Options: "json", "text"
 )
 
 # Request a summary in JSON format with streaming enabled
@@ -280,7 +280,7 @@ agent = RostaingBrain(
     data_source="my_video.mp4", # Supports: .avi, .mov, .mkv
     vector_db="chroma",  # Options: 'faiss' or 'chroma'
     stream=True,
-    output_format="markdown
+    output_format="markdown" # Options: "json", "text"
 )
 
 response = gent.chat("Give me a summary.") # output_format supports: "json", "text (default)", "markdown", "toon"
