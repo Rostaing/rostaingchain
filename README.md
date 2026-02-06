@@ -556,7 +556,7 @@ agent = RostaingBrain(
 
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| **Core** | | | |
+| **RostaingBrain** | | | |
 | `llm_model` | str | `"llama3.2"` | Name of the model (e.g., "gpt-4o", "claude-3-opus", "mistral"). |
 | `llm_provider` | str | `"auto"` | "openai", "groq", "ollama", "anthropic", "google", "deepseek". |
 | `llm_api_key` | str | `None` | API Key (optional if environment variable is set). |
