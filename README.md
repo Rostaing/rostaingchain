@@ -212,11 +212,13 @@ agent = RostaingBrain(
     vector_db="faiss",  # Options: 'faiss' or 'chroma'
     reset_db=True,      # Re-index the file on startup
     memory=True,        # Enable conversation history
-    security_filters=["PHONE", "BIC", "IBAN", "DATE"] # Optional: DLP Security. Set to True for ALL filters, False to disable, or a list to select specific fields.
+    security_filters=["PHONE", "BIC", "IBAN", "DATE"], # Optional: DLP Security. Set to True for ALL filters, False to disable, or a list to select specific fields.
+    stream=True,
+    output_format="markdown
 )
 
 # Request a summary in JSON format with streaming enabled
-response = agent.chat("Give me a summary.", stream=True, output_format="markdown") # output_format supports: "json", "text (default)", "markdown", "toon"
+response = agent.chat("Give me a summary.") # output_format supports: "json", "text (default)", "markdown", "toon"
 
 # Real-time display loop
 for token in response:
@@ -277,9 +279,11 @@ agent = RostaingBrain(
     llm_provider="openai",
     data_source="my_video.mp4", # Supports: .avi, .mov, .mkv
     vector_db="chroma",  # Options: 'faiss' or 'chroma'
+    stream=True,
+    output_format="markdown
 )
 
-response = gent.chat("Give me a summary.", stream=True, output_format="markdown") # output_format supports: "json", "text (default)", "markdown", "toon"
+response = gent.chat("Give me a summary.") # output_format supports: "json", "text (default)", "markdown", "toon"
 
 # Real-time display loop
 for token in response:
