@@ -7,12 +7,11 @@
 
 # 🧠 RostaingChain
 
-**The Ultimate Hybrid RAG Framework.**  
-Local & Remote LLMs | Real-time Watcher | Deep Data Profiling | DLP Security | Multi-Modal
+**The Ultimate Agentic RAG Framework.**  
+Autonomous Agents | Local & Remote LLMs | Real-time Watcher | Deep Data Profiling | DLP Security | Multi-Modal
 
-**RostaingChain** is a production-ready framework designed to build autonomous RAG (Retrieval-Augmented Generation) systems. It bridges the gap between local privacy (Ollama, Local Docs) and cloud power (OpenAI, Groq, Datastores), featuring a unique **Live Watcher** that updates your AI's knowledge in real-time.
+**RostaingChain** is a production-ready framework designed to build autonomous RAG (Retrieval-Augmented Generation) systems. It bridges the gap between local privacy (Ollama, Local Docs) and cloud power (OpenAI, Groq, Datastores), featuring a unique **Live Watcher** that updates your AI's knowledge in real-time and Agentic RAG with Self-Healing Data Analysis.
 
----
 
 ## 🚀 Key Features
 
@@ -101,7 +100,6 @@ XAI_API_KEY=...
 pip install python-dotenv
 ```
 
----
 
 ## ⚡ Quick Start
 
@@ -124,7 +122,6 @@ response = agent.chat("What are the main topics in these documents?")
 print(response)
 ```
 
----
 
 ## 🛠️ Advanced Usage
 
@@ -302,11 +299,13 @@ load_dotenv()
 agent = RostaingBrain(
     llm_model="gpt-4o",
     llm_provider="openai",
-    data_source="my_file.txt", # Supports: .pdf, .docx, .doc, .xlsx, .xls, .pptx, .ppt, .html, .htm, .xml, .epub, .md, .json, .log, .py, .js, .sql, .yaml, .ini
+    data_source="my_file.txt", # Supports: .pdf, .docx, .doc, .xlsx, .xls, .pptx, .ppt, .html, .htm, .xml, .epub, .md, .json, .log, .py, .js, .sql, .yaml, .ini, etc.
     vector_db="chroma",  # Options: 'faiss' or 'chroma'
+    stream=True,
+    output_format="markdown"
 )
 
-response = gent.chat("Give me a summary.", stream=True, output_format="markdown")
+response = gent.chat("Give me a summary.")
 
 # Real-time display loop
 for token in response:
@@ -452,10 +451,11 @@ agent = RostaingBrain(
     temperature=0,
     top_k=0.1,
     top_p=1,
-    max_tokens=1500
+    max_tokens=1500,
+    stream=True
 )
 
-response = gent.chat("Give me a summary.", stream=True)
+response = gent.chat("Give me a summary.")
 
 # Real-time display loop
 for token in response:
@@ -495,11 +495,11 @@ agent = RostaingBrain(
 ```python
 agent = RostaingBrain(
     llm_model="gemini-3-pro-preview",
-    llm_provider="geoogle" # Force the provider to ensure it
+    llm_provider="google" # Force the provider to ensure it
 )
 ```
 
-**E. Use Mixtral (via Groq for Speed)**
+**E. Use Mistral (via Groq for Speed)**
 ```python
 agent = RostaingBrain(
     llm_model="mistral-large-2512",
@@ -541,32 +541,60 @@ agent = RostaingBrain(
     This parameter enforces the structure or style of the LLM's response. It accepts three values:
     *   `"text"` (Default): A standard, conversational plain text response.
     *   `"json"`: Forces the LLM to output a valid JSON object. Extremely useful if you are building an API or need to parse the result programmatically.
-    *   `"toon"`: Changes the persona to a funny, cartoon-like character.
 
 *   **`vector_db`**:
     Defines the local vector storage engine. RostaingChain currently supports two robust, file-based options:
     *   `"chroma"`: Uses ChromaDB.
     *   `"faiss"`: Uses Facebook AI Similarity Search (highly efficient for CPU).
 
----
 
 ## ⚙️ Configuration Parameters
 
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `llm_model` | str | `"llama3"` | Name of the model (e.g., "gpt-4o", "llama3.2"). |
-| `llm_provider` | str | `"auto"` | "openai", "groq", "ollama", "anthropic"... |
-| `data_source` | str/dict/df | `"./data"` | File path, folder, URL, SQL config, or DataFrame. |
-| `vector_db` | str | `"chroma"` | "chroma", "faiss". |
-| `auto_update` | bool | `True` | Activates Watcher (File system or Polling). |
-| `poll_interval` | int | `60` | Seconds between DB/Web checks. |
-| `reset_db` | bool | `False` | Wipes vector DB on startup. |
-| `memory` | bool | `False` | Enables conversational history. |
+| **Core** | | | |
+| `llm_model` | str | `"llama3.2"` | Name of the model (e.g., "gpt-4o", "claude-3-opus", "mistral"). |
+| `llm_provider` | str | `"auto"` | "openai", "groq", "ollama", "anthropic", "google", "deepseek". |
+| `llm_api_key` | str | `None` | API Key (optional if environment variable is set). |
+| `llm_base_url` | str | `None` | Custom endpoint URL (for local setups or proxies). |
+| `embedding_model` | str | `"BAAI/bge-small-en-v1.5"` | Model used for vectorizing documents. |
+| `embedding_source` | str | `"fastembed"` | "fastembed", "openai", "ollama", "huggingface". |
+| `vector_db` | str | `"chroma"` | Vector Store backend: "chroma", "faiss", "qdrant". |
+| `data_source` | str/dict/obj | `"./data"` | File path, Folder path, Image path, URL, SQL Config (dict), or DataFrame object. |
+| **Automation** | | | |
+| `auto_update` | bool | `True` | Activates real-time Watcher (File system) or Polling (DB/Web). |
+| `poll_interval` | int | `60` | Interval in seconds between DB/Web checks. |
+| `reset_db` | bool | `False` | Wipes/Resets vector database storage on startup. |
+| `memory` | bool | `False` | Enables conversational history (Multi-turn chat). |
+| **Generation Settings** | | | |
+| `temperature` | float | `0.1` | Creativity of the model (0.0 = deterministic, 1.0 = creative). |
+| `max_tokens` | int | `None` | Limit response length. |
+| `top_p` | float | `None` | Nucleus sampling parameter. |
+| `top_k` | int | `None` | Top-K sampling parameter. |
+| `seed` | int | `None` | Seed for reproducible/deterministic outputs. |
+| `stream` | bool | `False` | Enables streaming response (token by token). |
 | `cache` | bool | `True` | Enables In-Memory caching for speed. |
-| `security_filters` | list/bool | `None` | List of filters (["IBAN", "PHONE"]) or True for all. |
-| `temperature` | float | `0.1` | Creativity of the model. |
+| `output_format` | str | `"text"` | Enforce format: `"text"`, `"json"`, `"markdown"`. |
+| **Agent Identity** | | | |
+| `role` | str | `"Helpful AI Assistant"` | Defines the persona/role of the agent. |
+| `goal` | str | `"Assist the user..."` | The primary objective of the agent. |
+| `instructions` | str | `"Answer concisely."` | Specific behavioral instructions or constraints. |
+| `reflection` | bool | `False` | Enables "Step-by-step" thinking and self-correction before answering. |
+| **Company Context** | | | |
+| `company_name` | str | `None` | Name of the organization for business context. |
+| `company_description`| str | `None` | Description of the company's activity. |
+| `company_url` | str | `None` | Website URL for context. |
+| **Security & User** | | | |
+| `security_filters` | list/bool | `None` | List of DLP filters (e.g., `["IBAN", "EMAIL"]`) or `True` for all. |
+| `user_profile` | str | `None` | Natural language description of user rights (e.g., "Intern, no access to salaries"). |
+| `user_id` | str | `None` | Unique identifier for the user. |
+| `session_id` | str | `None` | Unique identifier for the chat session. |
+| `agent_id` | str | `None` | Unique identifier for the specific agent instance. |
+| `system_prompt` | str | `None` | Full override of the system prompt (Advanced). |
+| **Tools & UI** | | | |
+| `mcp_tools` | list | `None` | List of Model Context Protocol tools for external integrations. |
+| `canvas` | object | `None` | Canvas UI instance for visual updates (Charts/Graphs). |
 
----
 
 ## 💡 Pro Tip: VSCode Autocomplete
 
@@ -603,7 +631,3 @@ graph TD
 - [Author's YouTube Channel](https://youtube.com/@RostaingAI?sub_confirmation=1)
 - [GitHub Repository](https://github.com/Rostaing/rostaingchain)
 - [PyPI Project Page](https://pypi.org/project/rostaingchain/)
-
-## 📄 License
-
-MIT License. See `LICENSE` for more information.
