@@ -612,7 +612,7 @@ This will trigger IntelliSense and display all configuration arguments (like `me
 
 ## 🏗️ Architecture
 
-![alt text](image.png)
+![Framework Architecture](https://raw.githubusercontent.com/Rostaing/rostaingchain/main/docs/architecture.png)
 
 ## Useful Links
 - [Author's LinkedIn](https://www.linkedin.com/in/davila-rostaing/)
