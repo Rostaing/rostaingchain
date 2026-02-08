@@ -18,23 +18,7 @@ Autonomous Agents | Local & Remote LLMs | Real-time Watcher | Deep Data Profilin
 *   **Hybrid Intelligence:** Switch instantly between Local LLMs (Ollama, Llama.cpp) and Remote giants (OpenAI, Groq, Claude, Gemini, DeepSeek, Grok).
 *   **Live Watcher (Auto-Sync):** Drop a file in a folder, modify a SQL row, or update a website -> The AI learns it instantly.
 *   **Deep Profiling (Anti-Hallucination):** Automatically calculates statistics (Max, Min, Mean) for CSV/SQL data so the LLM never hallucinates numbers.
-*   **DLP Security:** Built-in Redaction system to **mask sensitive data:** (
-- EMAIL: Email masked,
-- PHONE: Phone number masked,
-- ID_NUM: Personal ID masked,
-- PASSPORT: Passport number masked,
-- SSN: Social Security Number masked,
-- POSTAL: City/Postal Code masked,
-- BIC: BIC code confidential,
-- IBAN: IBAN bank details protected,
-- VAT_ID: VAT number masked,
-- CREDIT_CARD: Credit card number masked,
-- MONEY: Financial amount masked,
-- CRYPTO: Crypto wallet masked,
-- IP_ADDR: IP address masked,
-- MAC_ADDR: MAC address masked,
-- API_KEY: API Key redacted,
-- DATE: Date masked ) before display. Set to True for ALL filters, False to disable, or a list to select specific fields.
+*   **DLP Security:** Built-in Redaction system to **mask sensitive data** (See the **Security Filters & Data Masking** list below) before display. Set to True for ALL filters, False to disable, or a list to select specific fields.
 *   **Multi-Modal Native:** Understands Text, PDFs (OCR included), Images, Audio (Whisper), and YouTube videos.
 *   **Universal Sources:** Connects to Local Files, PostgreSQL, MySQL, Oracle, SQLite, MongoDB, Neo4j, and the Web.
 
@@ -214,7 +198,7 @@ agent = RostaingBrain(
     memory=True,        # Enable conversation history
     security_filters=["PHONE", "BIC", "IBAN", "DATE"], # Optional: DLP Security. Set to True for ALL filters, False to disable, or a list to select specific fields.
     stream=True,
-    output_format="markdown" # Options: "json", "text"
+    output_format="markdown" # Options: "json", "text", "cartoon"
 )
 
 # Request a summary in JSON format with streaming enabled
@@ -280,7 +264,7 @@ agent = RostaingBrain(
     data_source="my_video.mp4", # Supports: .avi, .mov, .mkv
     vector_db="chroma",  # Options: 'faiss' or 'chroma'
     stream=True,
-    output_format="markdown" # Options: "json", "text"
+    output_format="cartoon" # Options: "json", "text", "cartoon"
 )
 
 response = gent.chat("Give me a summary.") # output_format supports: "json", "text (default)", "markdown", "toon"
@@ -305,8 +289,7 @@ agent = RostaingBrain(
     llm_provider="openai",
     data_source="my_file.txt", # Supports: .pdf, .docx, .doc, .xlsx, .xls, .pptx, .ppt, .html, .htm, .xml, .epub, .md, .json, .log, .py, .js, .sql, .yaml, .ini, etc.
     vector_db="chroma",  # Options: 'faiss' or 'chroma'
-    stream=True,
-    output_format="markdown"
+    stream=True
 )
 
 response = gent.chat("Give me a summary.")
@@ -545,6 +528,7 @@ agent = RostaingBrain(
     This parameter enforces the structure or style of the LLM's response. It accepts three values:
     *   `"text"` (Default): A standard, conversational plain text response.
     *   `"json"`: Forces the LLM to output a valid JSON object. Extremely useful if you are building an API or need to parse the result programmatically.
+    *   `"cartoon"`: Makes the LLM generate responses in a playful, cartoon-style tone with simplified language and expressive descriptions. Useful for educational content, storytelling, or kid-friendly interfaces.
 
 *   **`vector_db`**:
     Defines the local vector storage engine. RostaingChain currently supports two robust, file-based options:
@@ -578,7 +562,7 @@ agent = RostaingBrain(
 | `seed` | int | `None` | Seed for reproducible/deterministic outputs. |
 | `stream` | bool | `False` | Enables streaming response (token by token). |
 | `cache` | bool | `True` | Enables In-Memory caching for speed. |
-| `output_format` | str | `"text"` | Enforce format: `"text"`, `"json"`, `"markdown"`. |
+| `output_format` | str | `"text"` | Enforce format: `"text"`, `"json"`, `"markdown"`, `"cartoon"`. |
 | **Agent Identity** | | | |
 | `role` | str | `"Helpful AI Assistant"` | Defines the persona/role of the agent. |
 | `goal` | str | `"Assist the user..."` | The primary objective of the agent. |
@@ -598,6 +582,32 @@ agent = RostaingBrain(
 | **Tools & UI** | | | |
 | `mcp_tools` | list | `None` | List of Model Context Protocol tools for external integrations. |
 | `canvas` | object | `None` | Canvas UI instance for visual updates (Charts/Graphs). |
+
+
+## 🔒 Security Filters & Data Masking
+
+| Data type | Alternative text |
+|----------------|----------------------|
+| EMAIL | `[Email masked]` |
+| PHONE | `[Phone masked]` |
+| ID_NUM | `[ID masked]` |
+| PASSPORT | `[Passport masked]` |
+| SSN | `[SSN masked]` |
+| ADDRESS | `[Address masked]` |
+| POSTAL | `[Postal Code masked]` |
+| BIC | `[BIC masked]` |
+| IBAN | `[IBAN masked]` |
+| VAT_ID | `[VAT masked]` |
+| CREDIT_CARD | `[Card masked]` |
+| MONEY | `[Amount masked]` |
+| CRYPTO | `[Crypto masked]` |
+| IP_ADDR | `[IP masked]` |
+| MAC_ADDR | `[MAC masked]` |
+| API_KEY | `[API Key redacted]` |
+| DATE | `[Date masked]` |
+| SALARY | `[Salary information confidential]` |
+| BIRTHDATE | `[Birth date masked]` |
+| MEDICAL | `[Medical information confidential]` |
 
 
 ## 💡 Pro Tip: VSCode Autocomplete
