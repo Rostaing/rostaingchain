@@ -17,7 +17,7 @@ Autonomous Agents | Local & Remote LLMs | Real-time Watcher | Deep Data Profilin
 
 *   **Hybrid Intelligence:** Switch instantly between Local LLMs (Ollama, Llama.cpp) and Remote giants (OpenAI, Groq, Claude, Gemini, DeepSeek, Grok).
 *   **Live Watcher (Auto-Sync):** Drop a file in a folder, modify a SQL row, update a website, or update a file -> The AI learns it instantly.
-*   **Deep Profiling (Anti-Hallucination):** Automatically calculates descriptive statistics (Max, Min, Mean, etc.), performs rigorous statistical tests (Hypothesis testing, P-values, Correlations...), and generates automated visualizations (Charts, Histograms...). By grounding the LLM in real-time data analysis and anomaly detection for CSV/Excel/SQL/NoSQL/DataFrame sources, it ensures the model never hallucinates numbers or trends.
+*   **Deep Profiling (Anti-Hallucination):** Automatically calculates descriptive statistics (Max, Min, Mean, etc.), performs rigorous statistical tests (Hypothesis testing, P-values, Correlations, etc.), and generates automated visualizations (Charts, Histograms, etc.). By grounding the LLM in real-time data analysis and anomaly detection for CSV/Excel/SQL/NoSQL/DataFrame/Parquet sources, it ensures the model never hallucinates numbers or trends.
 *   **DLP Security:** Built-in Redaction system to **mask sensitive data** (See the **Security Filters & Data Masking** list below) before display. Set to True for ALL filters, False to disable, or a list to select specific fields.
 *   **Multi-Modal Native:** Understands Text, PDFs (OCR included), Images, Audio (Whisper), and YouTube videos.
 *   **Universal Sources:** Connects to Local Files, PostgreSQL, MySQL, Oracle, Microsoft SQL Server, SQLite, MongoDB, Neo4j, and the Web.
