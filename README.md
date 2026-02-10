@@ -8,7 +8,7 @@
 # 🧠 RostaingChain
 
 **The Ultimate Agentic RAG Framework.**  
-Autonomous Agents | Local & Remote LLMs | Real-time Watcher | Deep Data Profiling | DLP Security | Multi-Modal
+Autonomous Agent | Local & Remote LLMs | Real-time Watcher | Deep Data Profiling | DLP Security | Multi-Modal
 
 **RostaingChain** is a production-ready framework designed to build autonomous RAG (Retrieval-Augmented Generation) systems. It bridges the gap between local privacy (Ollama, Local Docs) and cloud power (OpenAI, Groq, Datastores), featuring a unique **Live Watcher** that updates your AI's knowledge in real-time and Agentic RAG with Self-Healing Data Analysis.
 
@@ -68,35 +68,33 @@ conda activate rostaing_env
 
 ## 📦 Standard installation (Quick):
 Once your environment is activated, you can install the framework.
-
+Minimal (Lightweight).
 ```bash
-pip install rostaingchain
-# Optional: Install OCR capabilities
-pip install rostaing-ocr
+pip install rostaingchain 
 ```
 
 ### 📦 “Power User” installation (All-inclusive):
 
 ```bash
-pip install rostaingchain[all]
+pip install "rostaingchain[all]"
 ```
 
-### 📦 Specific installation (e.g., only for SQL/NoSQL and using remote LLMs):
+### 📦 Specific installation (e.g., only for SQL/NoSQL):
 
 ```bash
-pip install rostaingchain[database,llms]
+pip install "rostaingchain[database]"
 ```
 
-### 📦 For office documents and advanced OCR:
+### 📦 For office documents, files and advanced OCR:
 
 ```bash
-pip install rostaingchain[docs,llms]
+pip install "rostaingchain[docs]"
 ```
 
 ### 📦 For multimedia (YouTube, audio, video, web):
 
 ```bash
-pip install rostaingchain[media,llms]
+pip install "rostaingchain[media]"
 ```
 
 ## 🔑 Managing API Keys (Remote LLMs)
@@ -459,6 +457,7 @@ mysql_config = {
 **Oracle**
 ```python
 # Requires Oracle Instant Client installed
+# Ensure you ran 'pip install cx-oracle' in your terminal
 oracle_config = {
     "type": "sql",
     "connection_string": "oracle+cx_oracle://your_username:your_password@localhost:1521/?service_name=ORCL",
@@ -667,7 +666,7 @@ agent = RostaingAgent(
 | `llm_base_url` | str | `None` | Custom endpoint URL (for local setups or proxies). |
 | `embedding_model` | str | `"BAAI/bge-small-en-v1.5"` | Model used for vectorizing documents. |
 | `embedding_source` | str | `"fastembed"` | "fastembed", "openai", "ollama", "huggingface". |
-| `vector_db` | str | `"chroma"` | Vector Store backend: "chroma", "faiss", "qdrant". |
+| `vector_db` | str | `"chroma"` | Vector Store backend: "chroma", "faiss" |
 | `data_source` | str/dict/obj | `"./data"` | File path, Folder path, Image path, URL, SQL Config (dict), or DataFrame object. |
 | **Automation** | | | |
 | `auto_update` | bool | `True` | Activates real-time Watcher (File system) or Polling (DB/Web). |
