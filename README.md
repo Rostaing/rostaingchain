@@ -68,6 +68,7 @@ conda activate rostaing_env
 
 ## 📦 Standard installation (Quick):
 Once your environment is activated, you can install the framework.
+
 Minimal (Lightweight).
 ```bash
 pip install rostaingchain 
