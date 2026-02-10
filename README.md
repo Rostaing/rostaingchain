@@ -351,7 +351,7 @@ response = gent.chat("Give me a summary.")
 print(response)
 ```
 
-### 7. Video Analysis with Streaming & Markdown Output
+### 7. Video Analysis with Streaming & Cartoon Output
 
 ```python
 from rostaingchain import RostaingAgent
