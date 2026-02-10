@@ -137,7 +137,7 @@ Simply point `data_source` to a file, a folder, a database, or a URL.
 ```python
 from rostaingchain import RostaingAgent
 
-# Initialize the Brain
+# Initialize the Agent
 agent = RostaingAgent(
     llm_model="llama3.2",          # Use local Ollama
     data_source="/path/to/data", # Watches this folder
