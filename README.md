@@ -139,7 +139,7 @@ from rostaingchain import RostaingAgent
 
 # Initialize the Agent
 agent = RostaingAgent(
-    llm_model="llama3.2",          # Use local Ollama
+    llm_model="llama3.2", # Use local Ollama and ensure you ran 'ollama pull llama3.2' in your terminal
     data_source="/path/to/data", # Watches this folder
     auto_update=True             # Real-time ingestion
 )
@@ -369,7 +369,7 @@ agent = RostaingAgent(
     output_format="cartoon" # Options: "json", "text", "cartoon"
 )
 
-response = gent.chat("Give me a summary.") # output_format supports: "json", "text" (default), "markdown", "toon"
+response = gent.chat("Give me a summary.")
 
 # Real-time display loop
 for token in response:
