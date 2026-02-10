@@ -24,7 +24,50 @@ Autonomous Agents | Local & Remote LLMs | Real-time Watcher | Deep Data Profilin
 
 ---
 
-### 📦 Standard installation (Quick):
+## 🛠 Environment Setup
+
+To ensure stability and avoid dependency conflicts, we strongly recommend using a virtual environment. **RostaingChain** requires **Python 3.9 or higher**.
+
+### Option 1: Using Python `venv` (Standard)
+
+This is the built-in method. Choose the commands based on your Operating System:
+
+#### **On Windows:**
+```bash
+# 1. Create the environment
+python -m venv venv
+
+# 2. Activate it
+venv\Scripts\activate
+```
+
+#### **On macOS / Linux:**
+```bash
+# 1. Create the environment
+python3 -m venv venv
+
+# 2. Activate it
+source venv/bin/activate
+```
+
+---
+
+### Option 2: Using Conda (Recommended for Data Science)
+
+Conda is often more robust for managing complex dependencies like `pyodbc` or `chromadb`.
+
+```bash
+# 1. Create the environment with a specific Python version
+conda create -n rostaing_env python=3.12 -y
+
+# 2. Activate the environment
+conda activate rostaing_env
+```
+
+---
+
+## 📦 Standard installation (Quick):
+Once your environment is activated, you can install the framework.
 
 ```bash
 pip install rostaingchain
@@ -65,16 +108,16 @@ To use remote LLMs (like OpenAI, Groq, Claude, Gemini, Grok, Mistral, DeepSeek) 
 
 ```env
 # Standard Providers
-OPENAI_API_KEY=sk-proj-...
-ANTHROPIC_API_KEY=sk-ant-...
-GOOGLE_API_KEY=AIzaSy...
+OPENAI_API_KEY=...
+ANTHROPIC_API_KEY=...
+GOOGLE_API_KEY=...
 
 # Fast Inference Providers
-GROQ_API_KEY=gsk_...
+GROQ_API_KEY=...
 MISTRAL_API_KEY=...
 
 # OpenAI-Compatible Providers
-DEEPSEEK_API_KEY=sk-...
+DEEPSEEK_API_KEY=...
 XAI_API_KEY=...
 ```
 
@@ -92,12 +135,12 @@ pip install python-dotenv
 Simply point `data_source` to a file, a folder, a database, or a URL.
 
 ```python
-from rostaingchain import RostaingBrain
+from rostaingchain import RostaingAgent
 
 # Initialize the Brain
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="llama3.2",          # Use local Ollama
-    data_source="./my_documents", # Watches this folder
+    data_source="/path/to/data", # Watches this folder
     auto_update=True             # Real-time ingestion
 )
 
@@ -106,6 +149,64 @@ response = agent.chat("What are the main topics in these documents?")
 print(response)
 ```
 
+### 2. 🚀 Quick Start: Interactive Console Agent
+
+```python
+import os
+from dotenv import load_dotenv
+from rostaingchain import RostaingAgent
+
+# 1. Load environment variables (Make sure your .env file is set up)
+load_dotenv()
+
+def main():
+    # 2. Initialize the Agent
+    # RostaingAgent automatically handles data profiling, vector indexing, and memory.
+    agent = RostaingAgent(
+        llm_model="gpt-4o",
+        llm_provider="openai",
+        llm_api_key=os.getenv("OPENAI_API_KEY"),
+        data_source="data/products.xlsx",  # Path to your CSV/SQL/Excel/Image/Audio/Video/...
+        vector_db="faiss",                 # High-performance vector storage
+        reset_db=False,                    # Set to True to re-index the data
+        memory=True                       # Keep track of the conversation context
+    )
+
+    print("\n" + "="*40)
+    print("🤖 RotaingChain AGENT: CONSOLE MODE")
+    print("Type your question below or 'q' to exit.")
+    print("="*40 + "\n")
+
+    try:
+        while True:
+            # 3. Capture User Input
+            user_input = input("👤 You: ").strip()
+
+            # Exit condition
+            if user_input.lower() in ["q", "quit", "exit"]:
+                print("\nShutting down... Goodbye! 👋")
+                break
+
+            if not user_input:
+                continue
+
+            # 4. Generate & Display Response
+            print("🤖 Agent:", end=" ", flush=True)
+            
+            try:
+                response = agent.chat(user_input)
+                print(response)
+            except Exception as e:
+                print(f"\n❌ Error: {str(e)}")
+
+    except KeyboardInterrupt:
+        print("\n\n[System] Session interrupted by user. Closing... 👋")
+    finally:
+        print("Program closed.")
+
+if __name__ == "__main__":
+    main()
+```
 
 ## 🛠️ Advanced Usage
 
@@ -114,20 +215,21 @@ print(response)
 Extract transcripts and metadata automatically.
 
 ```python
-from rostaingchain import RostaingBrain
+from rostaingchain import RostaingAgent
 from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="openai/gpt-oss-120b",
     llm_provider="groq",
     data_source="https://www.youtube.com/watch?v=3mTK0vYYXA4",
-    vector_db="faiss"
+    vector_db="faiss",
+    stream=True
 )
 
 # Streaming response for better UX
-generator = agent.chat("Summarize this video in 3 bullet points.", stream=True)
+generator = agent.chat("Summarize this video in 3 bullet points.")
 
 for token in generator:
     print(token, end="", flush=True)
@@ -138,9 +240,9 @@ for token in generator:
 Protect sensitive information from being displayed.
 
 ```python
-from rostaingchain import RostaingBrain
+from rostaingchain import RostaingAgent
 
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="llama3.2",
     data_source="bank_statements.pdf",
     # Enable Security
@@ -152,19 +254,19 @@ print(response)
 # Output: "The IBAN is [Protected IBAN bank details]."
 ```
 
-### 3. Working with DataFrames (Pandas/Polars)
+### 3. Working with DataFrames (Pandas)
 
 ```python
 import pandas as pd
-from rostaingchain import RostaingBrain
+from rostaingchain import RostaingAgent
 from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-df = pd.read_csv("titanic.csv") # supports: Polars
+df = pd.read_csv("titanic.csv") 
 
 # Direct Memory Ingestion
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="gpt-4o",
     data_source=df,
     vector_db="chroma" 
@@ -178,7 +280,7 @@ print(agent.chat("What is the average age of passengers?"))
 RostaingChain natively handles audio files (like `.m4a`, `.mp3`) using OpenAI Whisper locally. This example demonstrates how to process an audio file, enforce security filters, and stream the result in a specific JSON format.
 
 ```python
-from rostaingchain import RostaingBrain
+from rostaingchain import RostaingAgent
 from dotenv import load_dotenv
 import os
 # Load environment variables from .env file
@@ -187,7 +289,7 @@ load_dotenv()
 # Assuming your API key is set
 llm_api_key = os.getenv("GROQ_API_KEY")
 
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="openai/gpt-oss-120b",
     llm_provider="groq",
     llm_api_key=llm_api_key,
@@ -213,13 +315,13 @@ for token in response:
 ### 5. Chat with a Website (Web RAG)
 
 ```python
-from RostaingChain import RostaingBrain
+from rostaingchain import RostaingAgent
 from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
 # Direct Memory Ingestion
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="gpt-4o",
     llm_provider="openai",
     data_source="https://en.wikipedia.org/wiki/Artificial_intelligence",
@@ -233,10 +335,10 @@ print(response)
 ### 6. Chat with an image (RAG)
 
 ```python
-from RostaingChain import RostaingBrain
+from rostaingchain import RostaingAgent
 
 # Direct Memory Ingestion
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="llama3.2", # Ensure you ran 'ollama pull llama3.2' in your terminal
     llm_provider="ollama", # Runs 100% locally on your machine for privacy
     embedding_model="nomic-embed-text", # Ensure you ran 'ollama pull nomic-embed-text' in your terminal
@@ -252,22 +354,22 @@ print(response)
 ### 7. Video Analysis with Streaming & Markdown Output
 
 ```python
-from RostaingChain import RostaingBrain
+from rostaingchain import RostaingAgent
 from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
 # Direct Memory Ingestion
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="gpt-4o",
     llm_provider="openai",
-    data_source="my_video.mp4", # Supports: .avi, .mov, .mkv
+    data_source="your_video.mp4", # Supports: .avi, .mov, .mkv, etc.
     vector_db="chroma",  # Options: 'faiss' or 'chroma'
     stream=True,
     output_format="cartoon" # Options: "json", "text", "cartoon"
 )
 
-response = gent.chat("Give me a summary.") # output_format supports: "json", "text (default)", "markdown", "toon"
+response = gent.chat("Give me a summary.") # output_format supports: "json", "text" (default), "markdown", "toon"
 
 # Real-time display loop
 for token in response:
@@ -278,16 +380,16 @@ for token in response:
 ### 8. Chat with a file (Streaming RAG)
 
 ```python
-from RostaingChain import RostaingBrain
+from rostaingchain import RostaingAgent
 from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
 # Direct Memory Ingestion
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="gpt-4o",
     llm_provider="openai",
-    data_source="my_file.txt", # Supports: .pdf, .docx, .doc, .xlsx, .xls, .pptx, .ppt, .html, .htm, .xml, .epub, .md, .json, .log, .py, .js, .sql, .yaml, .ini, etc.
+    data_source="your_file.txt", # Supports: .pdf, .docx, .doc, .xlsx, .xls, .pptx, .ppt, .html, .htm, .xml, .epub, .md, .json, .log, .py, .js, .sql, .yaml, .ini, etc.
     vector_db="chroma",  # Options: 'faiss' or 'chroma'
     stream=True
 )
@@ -302,10 +404,10 @@ for token in response:
 
 ### 9. Connecting to Databases (SQL / NoSQL)
 
-RostaingChain uses a **Polling Watcher** to monitor database changes.
+RostaingAgent uses a **Polling Watcher** to monitor database changes.
 
 ```python
-from rostaingchain import RostaingBrain
+from rostaingchain import RostaingAgent
 from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
@@ -313,16 +415,16 @@ load_dotenv()
 # PostgreSQL Configuration
 db_config = {
     "type": "sql",
-    "connection_string": "postgresql+psycopg2://user:pass@localhost:5432/finance_db",
-    "query": "SELECT * FROM sales_2024"
+    "connection_string": "postgresql+psycopg2://your_username:your_password@localhost:5432/your_database",
+    "query": "SELECT * FROM sales" # Your query
 }
 
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="gpt-4o",
     llm_provider="openai",
     data_source=db_config,
     poll_interval=30, # Check for DB changes every 30 seconds
-    reset_db=True,     # Start with a fresh index
+    reset_db=False,     # Start with a fresh index
     vector_db="faiss"
 )
 
@@ -332,7 +434,7 @@ print(agent.chat("What is the total revenue for Q1?"))
 
 ### 10 🗄️ Database Configuration Examples
 
-To connect **RostaingChain** to a database, create a dictionary `db_config` and pass it to the `data_source` parameter.
+To connect **RostaingAgent** to a database, create a dictionary `db_config` and pass it to the `data_source` parameter.
 
 ### 1. SQL Databases (via SQLAlchemy)
 
@@ -340,8 +442,8 @@ To connect **RostaingChain** to a database, create a dictionary `db_config` and 
 ```python
 pg_config = {
 "type": "sql",
-"connection_string": "postgresql+psycopg2://user:pass@localhost:5432/finance_db",
-"query": "SELECT * FROM sales_2026"
+"connection_string": "postgresql+psycopg2://your_username:your_password@localhost:5432/your_database",
+"query": "SELECT * FROM sales" # Your query
 }
 ```
 
@@ -349,8 +451,8 @@ pg_config = {
 ```python
 mysql_config = {
     "type": "sql",
-    "connection_string": "mysql+pymysql://username:password@localhost:3306/my_database",
-    "query": "SELECT * FROM orders WHERE status = 'shipped'"
+    "connection_string": "mysql+pymysql://my_username:your_password@localhost:3306/your_database",
+    "query": "SELECT * FROM orders WHERE status = 'shipped'" # Your query
 }
 ```
 
@@ -359,8 +461,8 @@ mysql_config = {
 # Requires Oracle Instant Client installed
 oracle_config = {
     "type": "sql",
-    "connection_string": "oracle+cx_oracle://username:password@localhost:1521/?service_name=ORCL",
-    "query": "SELECT * FROM employees"
+    "connection_string": "oracle+cx_oracle://your_username:your_password@localhost:1521/?service_name=ORCL",
+    "query": "SELECT * FROM employees" # Your query
 }
 ```
 
@@ -368,17 +470,35 @@ oracle_config = {
 ```python
 sqlite_config = {
     "type": "sql",
-    "connection_string": "sqlite:///C:/path/to/my_data.db",
-    "query": "SELECT * FROM invoices"
+    "connection_string": "sqlite:///C:/path/to/your_data.db",
+    "query": "SELECT * FROM invoices" # Your query
 }
 ```
 
 **Microsoft SQL Server**
 ```python
+# Option 1
+
 mssql_config = {
     "type": "sql",
-    "connection_string": "mssql+pymssql://username:password@localhost:1433/my_database",
-    "query": "SELECT top 100 * FROM customers"
+    "connection_string": "mssql+pymssql://your_username:your_password@localhost:1433/your_database",
+    "query": "SELECT top 100 * FROM customers" # Your query
+}
+
+# Option 2 (Recommended)
+# We build a valid SQLAlchemy URL.
+# We use quote_plus to handle special characters like \ in the server name.
+
+host = r"your_host" # Example: DESKTOP-9K6BSF8\SQLEXPRESS
+db_name = "your_database"
+username = "your_username"
+password = "your_password"
+
+connection_string = f"mssql+pyodbc://{username}:{password}@{host}/{db_name}?driver=ODBC+Driver+17+for+SQL+Server&TrustServerCertificate=yes"
+mssql_config = {
+    "type": "sql",
+    "connection_string": connection_string,
+    "query": "SELECT * FROM customers" # Your query
 }
 ```
 
@@ -402,38 +522,38 @@ neo4j_config = {
     "uri": "bolt://localhost:7687",
     "user": "neo4j",
     "password": "your_password",
-    "query": "MATCH (p:Person)-[:WROTE]->(a:Article) RETURN p.name, a.title LIMIT 20"
+    "query": "MATCH (p:Person)-[:WROTE]->(a:Article) RETURN p.name, a.title LIMIT 20" # Your query
 }
 ```
 
 ### Usage Example
 
 ```python
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="gpt-4o",
     data_source=mysql_config, # Pass the dictionary here.
-    poll_interval=60,         # Watch for changes every minute
-    reset_db=True
+    poll_interval=3600,         # Watch for changes every minute
+    reset_db=False
 )
 ```
 
 ### 11. Use a custom LLM (e.g., vLLM on another server)
 
 ```python
-from RostaingChain import RostaingBrain
+from rostaingchain import RostaingAgent
 from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
 # Direct Memory Ingestion
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="my-finetuned-model",
     llm_provider="custom",
     llm_base_url="http://192.168.1.50:8000/v1", # Your vLLM server
     llm_api_key="token-if-needed",
     memory=True,
     vector_db="chroma",  # Options: 'faiss' or 'chroma'
-    data_source="my_file.pdf", # Supports: .txt, .docx, .doc, .xlsx, .xls, .pptx, .ppt, .html, .htm, .xml, .epub, .md, .json, .log, .py, .js, .sql, .yaml, .ini, .jpg, .png, .jpeg, .bmp, .tiff, .webp, SQL/NoSQL Databases, Audio/Video/Web(link)
+    data_source="/path/to/your_file.pdf", # Supports: .txt, .docx, .doc, .xlsx, .xls, .pptx, .ppt, .html, .htm, .xml, .epub, .md, .json, .log, .py, .js, .sql, .yaml, .ini, .jpg, .png, .jpeg, .bmp, .tiff, .webp, SQL/NoSQL Databases, Audio/Video/Web(link)
     reset_db=True, # Start with a fresh index
     temperature=0,
     top_k=0.1,
@@ -454,7 +574,7 @@ for token in response:
 
 **A. Use DeepSeek (the cheaper GPT-4 alternative)**
 ```python
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="deepseek-chat", # Auto-detection
     provider="deepseek",
     # If the key is not in the .env:
@@ -464,7 +584,7 @@ agent = RostaingBrain(
 
 **B. Use Groq (Lightning speed – 500 tokens/s)**
 ```python
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="openai/gpt-oss-120b",
     llm_provider="groq" # Force the provider to ensure it
 )
@@ -472,7 +592,7 @@ agent = RostaingBrain(
 
 **C. Use Claude Sonnet (Best for coding)**
 ```python
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="claude-4.5-sonnet",
     llm_provider="anthropic" # Force the provider to ensure it
 )
@@ -480,7 +600,7 @@ agent = RostaingBrain(
 
 **D. Use Gemini 3 Pro (Google)**
 ```python
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="gemini-3-pro-preview",
     llm_provider="google" # Force the provider to ensure it
 )
@@ -488,7 +608,7 @@ agent = RostaingBrain(
 
 **E. Use Mistral (via Groq for Speed)**
 ```python
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="mistral-large-2512",
     llm_provider="mistral" # Force the provider for ultra-fast inference
 )
@@ -496,7 +616,7 @@ agent = RostaingBrain(
 
 **F. Use Grok (xAI)**
 ```python
-agent = RostaingBrain(
+agent = RostaingAgent(
      llm_model="grok-4.1",
     llm_provider="grok" # Automatically configures the xAI API base_url
 )
@@ -504,7 +624,7 @@ agent = RostaingBrain(
 
 **G. Use OpenAI (GPT-4o)**
 ```python
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="gpt-4o",
     llm_provider="openai" # Automatically uses OPENAI_API_KEY from your .env file
 )
@@ -512,7 +632,7 @@ agent = RostaingBrain(
 
 **H. Use Local LLMs (Ollama)**
 ```python
-agent = RostaingBrain(
+agent = RostaingAgent(
     llm_model="llama3.2",  # Ensure you ran 'ollama pull llama3.2' in your terminal
     llm_provider="ollama", # Runs 100% locally on your machine for privacy
     # llm_base_url="http://localhost:11434" # Optional: Default URL
@@ -540,7 +660,7 @@ agent = RostaingBrain(
 
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| **RostaingBrain** | | | |
+| **RostaingAgent** | | | |
 | `llm_model` | str | `"llama3.2"` | Name of the model (e.g., "gpt-4o", "claude-3-opus", "mistral"). |
 | `llm_provider` | str | `"auto"` | "openai", "groq", "ollama", "anthropic", "google", "deepseek". |
 | `llm_api_key` | str | `None` | API Key (optional if environment variable is set). |
@@ -612,7 +732,7 @@ agent = RostaingBrain(
 
 ## 💡 Pro Tip: VSCode Autocomplete
 
-Don't memorize the parameters! If you are using **VSCode**, you can view the complete list of available options for `RostaingBrain` instantly.
+Don't memorize the parameters! If you are using **VSCode**, you can view the complete list of available options for `RostaingAgent` instantly.
 
 Just place your cursor inside the parentheses and press:
 
