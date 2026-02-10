@@ -66,7 +66,7 @@ conda activate rostaing_env
 
 ---
 
-## 📦 Standard installation (Quick):
+## 📦 Installation:
 Once your environment is activated, you can install the framework.
 
 ```bash
