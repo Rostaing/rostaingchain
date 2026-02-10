@@ -69,34 +69,33 @@ conda activate rostaing_env
 ## 📦 Standard installation (Quick):
 Once your environment is activated, you can install the framework.
 
-Minimal (Lightweight).
 ```bash
 pip install rostaingchain 
 ```
 
-### 📦 “Power User” installation (All-inclusive):
+<!-- ### “Power User” installation (All-inclusive):
 
 ```bash
 pip install "rostaingchain[all]"
 ```
 
-### 📦 Specific installation (e.g., only for SQL/NoSQL):
+### Specific installation (e.g., only for SQL/NoSQL):
 
 ```bash
 pip install "rostaingchain[database]"
 ```
 
-### 📦 For office documents, files and advanced OCR:
+### For office documents, files and advanced OCR:
 
 ```bash
 pip install "rostaingchain[docs]"
 ```
 
-### 📦 For multimedia (YouTube, audio, video, web):
+### For multimedia (YouTube, audio, video, web):
 
 ```bash
 pip install "rostaingchain[media]"
-```
+``` -->
 
 ## 🔑 Managing API Keys (Remote LLMs)
 
